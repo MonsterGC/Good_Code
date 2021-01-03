@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>图片懒加载</title>
+</head>
+<style>
+    .image {
+        display: block;
+        margin-top: 600px;
+        width: 400px;
+        height: 200px;
+        border: 1px solid red;
+    }
+</style>
+
+<body>
+    <img id="image1" class="image"
+        data-img="https://i.ytimg.com/an_webp/AActXSWxsRo/mqdefault_6s.webp?du=3000&sqp=CPDjw_8F&rs=AOn4CLDl0UYiGVRGWUbgnZPO_9WmILnKUQ"
+        alt="">
+    <img id="image2" class="image"
+        data-img="https://i.ytimg.com/an_webp/aUjBvuUdkhg/mqdefault_6s.webp?du=3000&sqp=CMiIxP8F&rs=AOn4CLCTtkWqFEDeUpaKX4LwgW4wkbfbYg"
+        alt="">
+    <img id="image3" class="image"
+        data-img="https://i.ytimg.com/an_webp/4K33w-0-p2c/mqdefault_6s.webp?du=3000&sqp=COWJxP8F&rs=AOn4CLDFSrkRVjmZSZtDQOIhYeS6FivrcA"
+        alt="">
+    <img id="image4" class="image"
+        data-img="https://i.ytimg.com/an_webp/j59qQ7YWLxw/mqdefault_6s.webp?du=3000&sqp=CPD2w_8F&rs=AOn4CLBXbU5s1V3DW7WKimuhVScV98ob_A"
+        alt="">
+    <img id="image5" class="image"
+        data-img="https://i.ytimg.com/an_webp/BmRZi4ryiMQ/mqdefault_6s.webp?du=3000&sqp=CMz4w_8F&rs=AOn4CLDsRE-GjHRhmIdrsfQ_3w4ah1f9lg"
+        alt="">
+    <img id="image6" class="image"
+        data-img="https://i.ytimg.com/an_webp/fsg5HY130sE/mqdefault_6s.webp?du=3000&sqp=CMSLxP8F&rs=AOn4CLDFi-uWQFkmRemUVzIBxmoxv9MYAQ"
+        alt="">
+</body>
+<script>
+    let options = {
+        root: null,
+        rootMargin: '0px',
+        threshould: 0.25
+    };
+
+    let callback = (entries, observer)=>{
+        entries.forEach(entry => {
+            if(entry.isIntersecting
+                && entry.target.className === "image") {
+                    let imageUrl = entry.target.getAttribute('data-img');
+                    if(imageUrl){
+                        entry.target.src = imageUrl;
+                        observer.unobserve(entry.target);
+                    }
+                }
+        });
+    }
+    let observer = new IntersectionObserver(callback, options);
+    observer.observe(document.querySelector('#image1'));
+    observer.observe(document.querySelector('#image2'));
+    observer.observe(document.querySelector('#image3'));
+    observer.observe(document.querySelector('#image4'));
+    observer.observe(document.querySelector('#image5'));
+    observer.observe(document.querySelector('#image6'));
+</script>
+
+</html>
